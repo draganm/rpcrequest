@@ -15,6 +15,15 @@ While it's tailored for seamless interaction with Ethereum RPC endpoints, its fl
 
 ### Installation
 
+
+#### Using Homebrew
+
+```bash
+brew install draganm/tools/rpcrequest
+```
+
+#### Using `go install`
+
 ```bash
 go install github.com/draganm/rpcrequest
 ```
