@@ -61,6 +61,7 @@ RPCRequest can automatically convert string arguments into the required JSON typ
 - `bool:` Converts the following value to a boolean (`true` or `false`).
 - `int:` Converts the following value to an integer.
 - `asHex:` Converts an integer value into a hex-encoded string prefixed with `0x`. This is particularly useful for Ethereum RPC parameters like block numbers.
+- `json:` Converts a JSON string into a JSON value. This is useful when RPC parameter is a data structure.
 
 ## Contributing
 

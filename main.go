@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"strconv"
@@ -76,7 +77,8 @@ func main() {
 			defer res.Body.Close()
 
 			if res.StatusCode != http.StatusOK {
-				return fmt.Errorf("unexpected status code: %d", res.StatusCode)
+				d, _ := io.ReadAll(res.Body)
+				return fmt.Errorf("unexpected status %s: %s", res.Status, string(d))
 			}
 
 			resp := rpcResponse{}
@@ -120,6 +122,13 @@ func transform(v string) (any, error) {
 			return nil, fmt.Errorf("failed to parse int: %w", err)
 		}
 		return iv, nil
+	case strings.HasPrefix(v, "json:"):
+		var res any
+		err := json.Unmarshal([]byte(v[5:]), &res)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse json: %w", err)
+		}
+		return res, nil
 	default:
 		return v, nil
 	}
