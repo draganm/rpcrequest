@@ -16,7 +16,8 @@ import (
 func main() {
 
 	cfg := struct {
-		nodeURL string
+		nodeURL  string
+		dumpCurl bool
 	}{}
 
 	app := &cli.App{
@@ -29,6 +30,11 @@ func main() {
 				Usage:       "node url",
 				EnvVars:     []string{"NODE_URL"},
 				Destination: &cfg.nodeURL,
+			},
+			&cli.BoolFlag{
+				Name:        "dump-curl",
+				Usage:       "dump curl command instead of sending request",
+				Destination: &cfg.dumpCurl,
 			},
 		},
 		Action: func(c *cli.Context) error {
@@ -60,6 +66,11 @@ func main() {
 			d, err := json.Marshal(rpcRequest)
 			if err != nil {
 				return fmt.Errorf("failed to marshal rpc request: %w", err)
+			}
+
+			if cfg.dumpCurl {
+				fmt.Printf("curl -X POST -H 'Content-Type: application/json' -d '%s' %s\n", d, cfg.nodeURL)
+				return nil
 			}
 
 			req, err := http.NewRequest("POST", cfg.nodeURL, bytes.NewReader(d))
