@@ -3,5 +3,5 @@ pkgs.buildGoModule {
   pname = "rpcrequest";
   version = "0";
   src = ./.;
-  vendorHash = "sha256-Vn4WZzPWuSB9vzKVUAl4j4YmEorwm+4ljCXIJIG+yhM=";
+  vendorHash = "sha256-l8X2D+V9EWu1k6HF9/A63yt2+UtPc5WSE9NLsxawbtM=";
 }
